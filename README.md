@@ -8,7 +8,9 @@
 
 * Regarding money transfer, isolated agents can act as exchanges and assurance nodes. Exchanges receive and transfer fiduciary money to clients, among them tokens are exchanged.
 
-Whitepaper (draft)
+
+
+# Whitepaper (draft)
 
 The goal is to create a decentralized money transfer and lending system, which allows the free market to establish the price of the fees and the interest.
 
