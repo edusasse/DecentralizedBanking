@@ -1,7 +1,7 @@
-pragma solidity ^0.4.11; 
+pragma solidity ^0.4.18; 
 
 import './IERC20.sol';
-import './SafeMath.sol'; 
+import './SafeMath.sol';
 
 contract DecentralizedBankingToken is IERC20 {
     
@@ -66,7 +66,7 @@ contract DecentralizedBankingToken is IERC20 {
             && _value > 0 
         );
         
-        balances[_from] = balances[from].sub(_value); 
+        balances[_from] = balances[_from].sub(_value); 
         balances[_to] = balances[_to].add(_value); 
         allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);
         Transfer(_from, _to, _value); 
@@ -75,7 +75,7 @@ contract DecentralizedBankingToken is IERC20 {
     }
     
     function approve(address _spender, uint256 _value) returns (bool success) {
-        allowed[msgesender][_spender] = _value; 
+        allowed[msg.sender][_spender] = _value; 
         Approval(msg.sender, _spender, _value); 
         
         return true; 
