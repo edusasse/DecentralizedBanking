@@ -1,5 +1,5 @@
-var MoneyLoan = artifacts.require("./MoneyLoan.sol");
+var Migrations = artifacts.require("./Migrations.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(MoneyLoan);
+  deployer.deploy(Migrations);
 };

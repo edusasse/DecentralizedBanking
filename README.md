@@ -14,7 +14,7 @@ Check the [WHITEPAPER](WHITEPAPER.md) for more information.
 Install and execute Testrpc. 
 ```bash
 npm install -g ethereumjs-testrpc
-testrpc
+testrpc --rpc
 ```
 You should run testrpc in a new terminal and leave it running while you develop.
 
@@ -39,3 +39,7 @@ To run this migration again:
 truffle migrate --reset
 ```
 
+To test the project:
+```
+truffle test
+```

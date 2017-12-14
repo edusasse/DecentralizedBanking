@@ -1,33 +1,34 @@
 pragma solidity ^0.4.18; 
 
-import './IERC20.sol';
+import './ERC20.sol';
+import './ERC223.sol';
+import './SafeERC20.sol';
 import './SafeMath.sol';
+import "./Addresses.sol";
+import './Token.sol';
+import "./ERC223ReceivingContract.sol";
 
-contract DecentralizedBankingToken is IERC20 {
+/**
+ * @title Standard ERC20 token
+ *
+ * @dev Implementation of the basic standard token.
+ * @dev https://github.com/ethereum/EIPs/issues/20
+ * @dev Based on code by FirstBlood: https://github.com/Firstbloodio/token/blob/master/smart_contract/FirstBloodToken.sol
+ */
+contract DecentralizedBankingToken is Token("DBNK", "Decentralized Banking", 18, 10000), ERC20, ERC223 {
     
+    using Addresses for address;
+    using SafeERC20 for ERC20;
     using SafeMath for uint256;
-    
-    uint public _totalSupply = 0; 
 
-    string public constant symbol = "DBNK"; 
-    string public constant name = "Decentralized Banking";
-    
-    uint8 public constant decimals = 18; 
-    // 1 ether = 500 FUNC 
-    uint256 public constant RATE = 500; 
-    
     address public owner; 
     
     mapping(address => uint256) balances; 
     mapping(address => mapping(address => uint256)) allowed; 
     
-    function () payable { 
-        createTokens(); 
-    } 
-    
-    function FuncToken() { 
+    function DecentralizedBankingToken() { 
         owner = msg.sender; 
-    } 
+    }
     
     function createTokens() payable { 
         require(msg.value > 0); 
@@ -38,16 +39,12 @@ contract DecentralizedBankingToken is IERC20 {
         
         owner.transfer(msg.value);
     }
-    
-    function totalSupply() constant returns (uint256 total5upply) {
-        return _totalSupply; 
-    } 
-    
-    function balance0f(address _owner) constant returns (uint256 balance) { 
+
+    function balance0f(address _owner) public view returns (uint256 balance) { 
         return balances[_owner]; 
     }
     
-    function transfer(address _to, uint256 _value) returns (bool success) { 
+    function transfer(address _to, uint _value) public returns (bool success) { 
         require( 
             balances[msg.sender] >= _value 
             && _value > 0 ); 
@@ -58,8 +55,25 @@ contract DecentralizedBankingToken is IERC20 {
         
         return true; 
     }
+
+    function transfer(address _to, uint _value, bytes _data) public returns (bool) {
+        if (_value > 0 &&
+            _value <= _balanceOf[msg.sender]) {
+
+            if (_to.isContract()) {
+              ERC223ReceivingContract _contract = ERC223ReceivingContract(_to);
+              _contract.tokenFallback(msg.sender, _value, _data);
+            }
+
+            _balanceOf[msg.sender] = _balanceOf[msg.sender].sub(_value);
+            _balanceOf[_to] = _balanceOf[_to].add(_value);
+
+            return true;
+        }
+        return false;
+    }
     
-    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {
+    function transferFrom(address _from, address _to, uint _value) returns (bool success) {
         require( 
             allowed[_from][msg.sender] >= _value 
             && balances[_from] >= _value 
@@ -74,18 +88,18 @@ contract DecentralizedBankingToken is IERC20 {
         return true; 
     }
     
-    function approve(address _spender, uint256 _value) returns (bool success) {
+    function approve(address _spender, uint _value) returns (bool success) {
         allowed[msg.sender][_spender] = _value; 
         Approval(msg.sender, _spender, _value); 
         
         return true; 
     }
     
-    function allowance(address _owner, address _spender) constant returns (uint256 remaining){
+    function allowance(address _owner, address _spender) constant returns (uint remaining){
         return allowed[_owner][_spender]; 
     } 
     
-    event Transfer(address indexed _from, address indexed _to, uint256 _value); 
-    event Approval(address indexed _owner, address indexed _spender, uint256 _value); 
+    event Transfer(address indexed _from, address indexed _to, uint _value); 
+    event Approval(address indexed _owner, address indexed _spender, uint _value); 
 
 }
