@@ -1,4 +1,4 @@
-# Decentralized Banking
+# Decentralized Banking System
 
 ## TL;DR;
 
@@ -65,6 +65,11 @@ Monthly loan repayments must be made by the client in the given period. The agre
 When monthly loan repayments buy a smaller amount of tokens than expected, the system is responsible for creating new tokens and matching the number of tokens with the expected. This mechanism decelerates the speculative market by "forging more token".
 
 When monthly loan repayments buy a greater amount of tokens than expected. The market slows the fall by selling more tokens, reducing the supply in the market.
+
+## The Agent
+
+	The transaction may have an intermediary, called an agent, which may be an institution that abstracts most of the complexity involved in the decentralized lending process.
+The agent is responsible for carrying out the process, submitting the documents on behalf of the client, in addition to converting the tokens and delivering the money to the client. The monthly loan repayments are then made directly to the agent, being he the one responsible for interacting with the system.
 
 ## About Fraudulent Actions
 
@@ -458,11 +463,10 @@ Node (A) wants to transfer USD 1000.00 to Node (B), the money deposit will be ma
 
 # Box of wishes
 
-* Once the Exchange-Nodes have accumulated a lot of transaction, maybe the acceptance of a transaction can be defined as automatically.
+* Once the Exchange-Nodes have accumulated a lot of transaction, maybe the acceptance of a transaction can be defined as automatically. (money transfer)
 
-* Companies as clients of this network, placing "duplicatas" as collateral;
-
-* Investor-Nodes should emit "Boletos" in order to receive (Brazil only);
+* Companies as clients of this network may place their receivables as collateral for the loan. (money loan)
 
 # Notes
 
+* Agents can represent a new place in the market, creating a layer that abstracts the complexities involved in the blockchain.
