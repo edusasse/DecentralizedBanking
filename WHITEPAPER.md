@@ -26,6 +26,8 @@ In a decentralized loan network, the guarantee of the operation is given by the 
 
 * **Client-Node**: User who wants to get a loan.
 
+* **Agent-Node**: The agents are responsible for intermediating the loans to the client.
+
 * **Investor-Node**: User who wants to invest the money. 
 
 * **Moneylender-Node**: User that holds the funds of the Investor-Nodes. Responsible for managing the loans. Responsible for defining contract risk together with the Assurance-Node.
